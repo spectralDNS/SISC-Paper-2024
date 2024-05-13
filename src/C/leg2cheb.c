@@ -1322,7 +1322,7 @@ size_t execute(const double *input_array, double *output_array,
     }
   }
 
-  /*for (size_t odd = 0; odd < 2; odd++) {
+  for (size_t odd = 0; odd < 2; odd++) {
     for (size_t i = 0; i < Nn / 2; i++) {
       oa[i] = 0.0;
     }
@@ -1441,7 +1441,7 @@ size_t execute(const double *input_array, double *output_array,
       }
     }
     // flops += 3*N/2;
-  }*/
+  }
 
   switch (direction) {
   case L2C:
