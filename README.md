@@ -40,5 +40,6 @@ Another simple way to test this code is to create a codespace. The environment.y
      meson setup build --prefix=$PWD/build-install --includedir=$CONDA_PREFIX/include --libdir=$CONDA_PREFIX/lib
      meson install -C build
      export PATH=$PWD/build-install/bin:$PATH
+     export PYTHONPATH=$PWD/build-install/lib/python3.12/site-packages:$PYTHONPATH
      l2c -N1000 -d2 # runs a forward and backward transform and computes the error for an array of length 1000
      meson test -C build # runs all the tests
