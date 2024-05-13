@@ -1,0 +1,39 @@
+name: L2C-CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+    name: Python ${{ matrix.python-version }} example
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+          activate-environment: l2c
+          channels: conda-forge
+          environment-file: environment.yml
+          python-version: ${{ matrix.python-version }}
+          auto-activate-base: true
+    - name: install and test 
+      run: | 
+        cd src
+        meson setup build --prefix=$PWD/build-install --includedir=$CONDA_PREFIX/include --libdir=$CONDA_PREFIX/lib
+        export PYTHONPATH=$PYTHONPATH:$PWD/build-install/lib/python${{ matrix.python-version }}/site-packages
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/build-install/lib
+        export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$PWD/build-install/lib
+        meson configure -Dc_args=-DTEST build
+        meson install -C build
+        meson test -v -C build

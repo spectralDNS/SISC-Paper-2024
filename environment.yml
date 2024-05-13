@@ -1,0 +1,22 @@
+name: l2c
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - pip
+  - numpy
+  - numba
+  - cython
+  - fftw
+  - mpi4py-fft
+  - openblas
+  - meson
+  - ninja
+  - pkg-config
+  - mpmath
+  - boost
+  - pytest
+  - scipy
+  - sympy
